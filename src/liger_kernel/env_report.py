@@ -55,7 +55,8 @@ def print_env_report():
     try:
         xpu_version = torch.version.xpu if torch.xpu.is_available() else "XPU Not Available"
         print(f"XPU version: {xpu_version}")
-    except ImportError:
+    except (ImportError, AttributeError, UnboundLocalError):
+        # PyTorch may be missing, or its build may not expose XPU information.
         print("XPU version: Unable to query")
 
 
